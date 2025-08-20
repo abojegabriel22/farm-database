@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  title: Farm database API
+  version: 1.0.0
+  description: API for managing farm records and calculations
+
+servers:
+  - url: http://localhost:1960
+    description: Local development server
+
+paths: 
+  /chicken-api/batch:
+    post:
+      $ref: './paths/batch.yaml#/post'
+    get:
+      $ref: './paths/batch.yaml#/get'
+  /chicken-api/purchase:
+    post:
+      $ref: './paths/purchase.yaml#/post'
+  /chicken-api/purchase/{batchId}:
+    get:
+      $ref: './paths/purchase.yaml#/get'
+  /chicken-api/feeds:
+    post:
+      $ref: './paths/feeds.yaml#/post'
+  /chicken-api/feeds/{batchId}:
+    get:
+      $ref: './paths/feeds.yaml#/get'
+  /chicken-api/feeds-total/{batchId}:
+    get:
+      $ref: './paths/feeds-total.yaml#/get'
+  /chicken-api/vaccine:
+    post:
+      $ref: './paths/vaccine.yaml#/post'
+  /chicken-api/vaccine/{batchId}:
+    get:
+      $ref: './paths/vaccine.yaml#/get'
+  /chicken-api/total-vaccine/{batchId}:
+    get:
+      $ref: './paths/total-vaccine.yaml#/get'
+  /chicken-api/mortality:
+    post:
+      $ref: './paths/mortality.yaml#/post'
+  /chicken-api/mortality/{batchId}:
+    get:
+      $ref: './paths/mortality.yaml#/get'
+  /chicken-api/mortality-sum/{batchId}:
+    get:
+      $ref: './paths/mortality-sum.yaml#/get'
+  /chicken-api/sales:
+    post:
+      $ref: './paths/sales.yaml#/post'
+  /chicken-api/sales/{batchId}:
+    get:
+      $ref: './paths/sales.yaml#/get'
+  /chicken-api/sale-summary/{batchId}:
+    get:
+      $ref: './paths/sale-summary.yaml#/get'
+  /chicken-api/batchdata/{batchId}:
+    get:
+      $ref: './paths/batchdata.yaml#/get'
+  
+components: 
+  schemas: 
+    batchInput:
+      $ref: './components/schemas/batch.yaml#/batchInput'
+    batchOutput:
+      $ref: './components/schemas/batch.yaml#/batchOutput'
+    purchaseInput:
+      $ref: './components/schemas/purchase.yaml#/purchaseInput'
+    purchaseOutput:
+      $ref: './components/schemas/purchase.yaml#/purchaseOutput'
+    feedsInput: 
+      $ref: './components/schemas/feeds.yaml#/feedsInput'
+    feedsOutput: 
+      $ref: './components/schemas/feeds.yaml#/feedsOutput'
+    feedsTotalOutput:
+      $ref: './components/schemas/feeds-total.yaml#/feedsTotalOutput'
+    vaccineInput: 
+      $ref: './components/schemas/vaccine.yaml#/vaccineInput'
+    vaccineOutput: 
+      $ref: './components/schemas/vaccine.yaml#/vaccineOutput'
+    totalVaccineOutput:
+      $ref: './components/schemas/total-vaccine.yaml#/totalVaccineOutput'
+    errorResponse: 
+      $ref: './components/schemas/error.yaml#/errorResponse'
+    mortalityInput:
+      $ref: './components/schemas/mortality.yaml#/mortalityInput'
+    mortalityOutput:
+      $ref: './components/schemas/mortality.yaml#/mortalityOutput'
+    mortalitySumOutput:
+      $ref: './components/schemas/mortality-sum.yaml#/mortalitySumOutput'
+    salesInput:
+      $ref: './components/schemas/sales.yaml#/salesInput'
+    salesOutput:
+      $ref: './components/schemas/sales.yaml#/salesOutput'
+    saleSummaryOutput:
+      $ref: './components/schemas/sale-summary.yaml#/saleSummaryOutput'
+    batchDataOutput:
+      $ref: './components/schemas/batchdata.yaml#/batchDataOutput'

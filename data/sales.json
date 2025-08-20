@@ -1,0 +1,54 @@
+
+[
+    {
+        "number_of_sales": 10,
+        "amount_per_sale": 25000,
+        "batch_id": 1,
+        "batch_name": "Batch 1",
+        "farm_id": 1,
+        "farm_name": "Farm A",
+        "date": "2025-10-01",
+        "price": 250000
+          
+    },
+    {
+        "number_of_sales": 5,
+        "amount_per_sale": 25000,
+        "batch_id": 1,
+        "batch_name": "Batch 1",
+        "farm_id": 1,
+        "farm_name": "Farm A",
+        "date": "2025-10-20",
+        "price": 125000
+    },
+    {
+        "number_of_sales": 15,
+        "amount_per_sale": 26000,
+        "batch_id": 1,
+        "batch_name": "Batch 1",
+        "farm_id": 1,
+        "farm_name": "Farm A",
+        "date": "2025-11-01",
+        "price": 390000
+    },
+    {
+        "number_of_sales": 8,
+        "amount_per_sale": 26000,
+        "batch_id": 1,
+        "batch_name": "Batch 1",
+        "farm_id": 1,
+        "farm_name": "Farm A",
+        "date": "2025-11-12",
+        "price": 208000
+    },
+    {
+        "number_of_sales": 6,
+        "amount_per_sale": 24800,
+        "batch_id": 1,
+        "batch_name": "Batch 1",
+        "farm_id": 1,
+        "farm_name": "Farm A",
+        "date": "2025-11-21",
+        "price": 148800
+    }
+]

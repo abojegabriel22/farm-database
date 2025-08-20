@@ -1,0 +1,53 @@
+post:
+  tags:
+    - Vaccine
+  summary: Vaccine input section
+  description: Adds a new vaccine record
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/vaccine.yaml#/vaccineInput'
+  responses:
+    '201':
+      description: Adds a new vaccine successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/vaccine.yaml#/vaccineOutput'
+    '400':
+      description: Invalid input vaccine data
+      content: 
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml#/errorResponse'
+
+get:
+  tags:
+    - Vaccine
+  parameters:
+    - name: batchId
+      in: path
+      required: true
+      description: The ID of the batch to fetch feeds for.
+      schema:
+        type: string
+        example: "68a3b06d617178ea6af73d4e"
+  summary: Gets all vaccine records for a batch
+  description: Retrieves all vaccine records
+  responses:
+    '200': 
+      description: List of vaccine records retrieved successfully
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../components/schemas/vaccine.yaml#/vaccineOutput'
+    '404':
+      description: No vaccine records found
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml#/errorResponse'

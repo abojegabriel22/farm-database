@@ -1,0 +1,30 @@
+
+[
+    {
+        "number_of_mortality": 5,
+        "age": "10 days old",
+        "batch_id": 1,
+        "batch_name": "Batch A",
+        "farm_id": 1,
+        "farm_name": "Farm A",
+        "date": "2025-01-02"
+    },
+    {
+        "number_of_mortality": 3,
+        "age": "15 days old",
+        "batch_id": 2,
+        "batch_name": "Batch B",
+        "farm_id": 2,
+        "farm_name": "Farm B",
+        "date": "2025-03-02"
+    },
+    {
+        "number_of_mortality": 8,
+        "age": "20 days old",
+        "batch_id": 3,
+        "batch_name": "Batch C",
+        "farm_id": 3,
+        "farm_name": "Farm C",
+        "date": "2025-05-02"
+    }
+]

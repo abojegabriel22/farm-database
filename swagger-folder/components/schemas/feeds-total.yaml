@@ -1,0 +1,67 @@
+feedsTotalOutput:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Feed summary per purchase + grand total fetched successfully"
+    perPurchase:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            type: string
+            example: "689fb8d465c1f388a6192dd3"
+          totalQuantity:
+            type: number
+            example: 45
+          totalPrice:
+            type: number
+            example: 645000
+          purchaseDetails:
+            type: object
+            properties:
+              _id:
+                type: string
+                example: "689fb8d465c1f388a6192dd3"
+              batchId:
+                type: string
+                example: "689fb79565c1f388a6192dcc"
+              quantity:
+                type: number
+                example: 10010
+              price:
+                type: number
+                example: 850000
+              pricePerChick:
+                type: number
+                example: 84.91508491508492
+              dateOfPurchase:
+                type: string
+                format: date-time
+                example: "2025-08-15T22:46:44.733Z"
+              __v:
+                type: integer
+                example: 0
+    grandTotal:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "68a27ed643056d4afafc5981"
+        batchId:
+          type: string
+          example: "689fb79565c1f388a6192dcc"
+        __v:
+          type: integer
+          example: 0
+        totalPrices:
+          type: number
+          example: 645000
+        totalQuantity:
+          type: number
+          example: 45
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2025-08-19T01:22:42.024Z"

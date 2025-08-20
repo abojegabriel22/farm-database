@@ -1,0 +1,53 @@
+post:
+  summary: Create feed record
+  description: Adds a new feed record and calculates pricePerFeed automatically
+  tags:
+    - Feeds
+  requestBody: 
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/feeds.yaml#/feedsInput'
+  responses:
+    '201':
+      description: Feed record created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/feeds.yaml#/feedsOutput'
+    '400':
+      description: Invalid feed input data
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml#/errorResponse'
+
+get:
+  summary: Get all feeds for a batch
+  description: Fetch all feed records linked to a given batch.
+  tags:
+    - Feeds
+  parameters:
+    - name: batchId
+      in: path
+      required: true
+      description: The ID of the batch to fetch feeds for.
+      schema:
+        type: string
+        example: "68a3b06d617178ea6af73d4e"
+  responses:
+    '200':
+      description: List of feed records retrieved successfully
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../components/schemas/feeds.yaml#/feedsOutput'
+    '404':
+      description: No feeds found for this batch
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml#/errorResponse'

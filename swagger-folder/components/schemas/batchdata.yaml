@@ -1,0 +1,76 @@
+batchDataOutput:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Batch summaries fetched successfully"
+    data:
+      type: object
+      properties:
+        salesSummary:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: "68a108f4f2ab8991d82c02ce"
+            totalNumSold:
+              type: integer
+              example: 22
+            totalSaleAmount:
+              type: number
+              example: 198000
+        feedSummary:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: "68a27ed643056d4afafc5981"
+            totalPrices:
+              type: number
+              example: 535000
+            totalQuantity:
+              type: integer
+              example: 35
+        mortalitySummary:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: "68a1fd17f2ab8991d82c02d1"
+            totalMortalities:
+              type: integer
+              example: 23
+        totalVaccineSummary:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: "68a3aa4543056d4afafc59b9"
+            totalVaccineAmount:
+              type: number
+              example: 59600
+        purchaseSummary:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: "689fb8d465c1f388a6192dd3"
+            quantity:
+              type: integer
+              example: 10010
+            price:
+              type: number
+              example: 850000
+            pricePerChick:
+              type: number
+              example: 84.91
+            dateOfPurchase:
+              type: string
+              format: date-time
+              example: "2025-08-15T22:46:44.733Z"
+            daysSincePurchase:
+              type: integer
+              example: 3
+            dateOfPurchaseFormatted:
+              type: string
+              example: "15/08/2025, 23:46:44"

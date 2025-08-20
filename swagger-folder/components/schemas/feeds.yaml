@@ -1,0 +1,52 @@
+feedsInput:
+  type: object
+  required: ["quantity", "totalPrice", "batchId", "purchaseId"]
+  properties:
+    quantity:
+      type: integer
+      description: Quantity of feeds bought
+      example: 10
+    totalPrice: 
+      type: number
+      description: Total price of feeds
+      example: 248500
+    batchId:
+      type: string
+      description: The ID of the batch linked to this feed purchase
+      example: "68a3b06d617178ea6af73d4e"
+    purchaseId:
+      type: string
+      description: The ID of the purchase record linked to this feed
+      example: "68a3b876a9f9531abca7561c"
+
+feedsOutput:
+  type: object
+  properties:
+    _id: 
+      type: string
+      description: Unique identifier for each feed records
+      example: 689a70f6fe5975045b7377ca
+    quantity:
+      type: integer
+      description: Number of feeds purchased
+      example: 10
+    totalPrice:
+      type: number
+      description: Amount of feeds bought in total
+      example: 248500
+    pricePerFeed:
+      type: number
+      description: Amount auto calculated from total feeds and totalPrice
+      example: 24850
+    date:
+      type: string
+      description: Date when feeds were bought
+      example: 11/08/2025, 23:38:46
+    batchId:
+      type: string
+      description: The ID of the batch linked to this feed purchase
+      example: "68a3b06d617178ea6af73d4e"
+    purchaseId:
+      type: string
+      description: The ID of the purchase record linked to this feed
+      example: "68a3b876a9f9531abca7561c"

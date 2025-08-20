@@ -1,0 +1,26 @@
+get:
+  summary: Get total vaccine summary for a batch
+  description: Retrieves the total vaccine cost for a given batch.
+  tags:
+    - Vaccine
+  parameters:
+    - name: batchId
+      in: path
+      required: true
+      description: The ID of the batch
+      schema:
+        type: string
+        example: "689fb79565c1f388a6192dcc"
+  responses:
+    '200':
+      description: Total vaccine summary fetched successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/total-vaccine.yaml#/totalVaccineOutput'
+    '404':
+      description: No vaccine records found for this batch
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml#/errorResponse'

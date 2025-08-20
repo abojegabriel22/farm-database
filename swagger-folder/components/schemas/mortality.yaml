@@ -1,0 +1,51 @@
+mortalityInput:
+  type: object
+  required: ["mortalityRate", "batchId", "purchaseId"]
+  properties:
+    mortalityRate:
+      type: integer
+      description: This is the total number of mortalities recorded for the day
+      example: 2
+    batchId:
+      type: string
+      description: The ID of the batch linked to this mortality record
+      example: "689fb79565c1f388a6192dcc"
+    purchaseId:
+      type: string
+      description: The ID of the purchase record linked to this mortality record
+      example: "68a12f0394723e99cf8dc3e7"
+
+mortalityOutput: 
+  type: object
+  properties:
+    message:
+      type: string
+      description: Response message from the server
+      example: "New record of mortality taken:"
+    data:
+      type: object
+      properties:
+        _id: 
+          type: string
+          description: Auto generated from database. A unique identifier
+          example: "68a3d940599381d19a8d6a49"
+        mortalityRate:
+          type: integer
+          description: This is the total number of mortalities recorded for the day
+          example: 2
+        mortalityAge:
+          type: integer
+          description: The age (in days) at which the mortality occurred (calculated automatically by the system)
+          example: 2
+        batchId:
+          type: string
+          description: The ID of the batch linked to this mortality record
+          example: "689fb79565c1f388a6192dcc"
+        purchaseId:
+          type: string
+          description: The ID of the purchase record linked to this mortality record
+          example: "68a12f0394723e99cf8dc3e7"
+        date:
+          type: string
+          description: Date when the mortality was recorded (auto generated from database)
+          example: "19/08/2025, 02:54:08"

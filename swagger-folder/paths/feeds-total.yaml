@@ -1,0 +1,32 @@
+get:
+  summary: Get feed summary for a batch
+  description: Retrieves total feed usage per purchase and the grand total for a given batch.
+  tags:
+    - Feeds
+  parameters:
+    - name: batchId
+      in: path
+      required: true
+      description: The ID of the batch
+      schema:
+        type: string
+        example: "689fb79565c1f388a6192dcc"
+  responses:
+    '200':
+      description: Feed summary per purchase + grand total fetched successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/feeds-total.yaml#/feedsTotalOutput'
+    '404':
+      description: No feed records found for this batch
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml#/errorResponse'
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml#/errorResponse'

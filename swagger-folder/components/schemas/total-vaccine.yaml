@@ -1,0 +1,35 @@
+totalVaccineOutput:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Total vaccine summary fetched"
+    data:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "68a3aa4543056d4afafc59b9"
+        batchId:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: "689fb79565c1f388a6192dcc"
+            name:
+              type: string
+              example: "Batch A"
+            startDate:
+              type: string
+              format: date-time
+              example: "2025-08-14T23:00:00.000Z"
+        __v:
+          type: integer
+          example: 0
+        dateUpdated:
+          type: string
+          format: date-time
+          example: "2025-08-18T22:39:40.372Z"
+        totalVaccineAmount:
+          type: number
+          example: 59600

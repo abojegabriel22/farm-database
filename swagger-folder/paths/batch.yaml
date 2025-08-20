@@ -1,0 +1,52 @@
+
+post:
+  summary: This is the post route for batch record
+  description: create new batch record
+  tags:
+    - Batch
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/batch.yaml#/batchInput'
+  responses:
+    '201':
+      description: New batch record created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/batch.yaml#/batchOutput'
+    '400':
+      description: Unable to save record, please try again!
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml#/errorResponse'
+get:
+  summary: This is the get route to retrieve batch records
+  description: fetch all  batch records
+  tags:
+    - Batch
+  responses:
+    '200':
+      description: Batch records fetched successfully
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../components/schemas/batch.yaml#/batchOutput'
+    '404':
+      description: No batch records found
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml#/errorResponse'
+    '500':
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml#/errorResponse'
+  

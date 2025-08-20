@@ -1,0 +1,30 @@
+
+[
+    {
+        "name_of_vaccine": ["Vaccine A", "Vaccine B", "Vaccine C"],
+        "price": 15000,
+        "batch_id": 1,
+        "batch_name": "Batch A",
+        "farm_id": 1,
+        "farm_name": "Farm A",
+        "date": "2025-01-02"
+    },
+    {
+        "name_of_vaccine": ["Vaccine D", "Vaccine E"],
+        "price": 20000,
+        "batch_id": 2,
+        "batch_name": "Batch B",
+        "farm_id": 2,
+        "farm_name": "Farm B",
+        "date": "2025-03-02"
+    },
+    {
+        "name_of_vaccine": ["Vaccine F"],
+        "price": 25000,
+        "batch_id": 3,
+        "batch_name": "Batch C",
+        "farm_id": 3,
+        "farm_name": "Farm C",
+        "date": "2025-05-02"
+    }
+]

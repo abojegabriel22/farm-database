@@ -1,0 +1,39 @@
+
+batchInput:
+  type: object
+  required: ["name", "description"]
+  properties:
+    name:
+      type: string
+      description: Name of your batch
+      example: "Batch A"
+    description:
+      type: string
+      description: Description of your batch
+      example: "This is a sample batch for testing purposes"
+
+batchOutput:
+  type: object
+  properties:
+    _id:
+      type: string
+      description: Unique identifier for each batch record
+      example: "68a3b06d617178ea6af73d4e"
+    name:
+      type: string
+      description: Name of the batch
+      example: "Batch A"
+    description:
+      type: string
+      description: Description of the batch
+      example: "This is a sample batch for testing purposes"
+    createdAt:
+      type: string
+      format: date-time
+      description: Timestamp when the batch was created
+      example: "2025-08-11T23:38:46Z"
+    createAt:
+      type: string
+      format: date-time
+      description: Timestamp when the batch was created
+      example: "2025-08-11T23:38:46Z"

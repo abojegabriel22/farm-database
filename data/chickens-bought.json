@@ -1,0 +1,44 @@
+[
+    {
+        "date": "2025-01-01",
+        "chickens_bought": 150,
+        "farm_id": 1,
+        "farm_name": "Farm A",
+        "price": 150000,
+        "amount_per_chick": 1000,
+        "days_since_purchased": 60,
+        "batch_id": 1,
+        "batch_name": "Batch A",
+        "batch_description": "First batch of chickens purchased for the year",
+        "batch_status": "Active",
+        "age_of_chicks": "1 day old"
+    },
+    {
+        "date": "2025-03-01",
+        "chickens_bought": 200,
+        "farm_id": 2,
+        "farm_name": "Farm B",
+        "price": 200000,
+        "amount_per_chick": 1000,
+        "days_since_purchased": 30,
+        "batch_id": 2,
+        "batch_name":"Batch B",
+        "batch_description": "Second batch of chickens purchased for the year",
+        "batch_status": "Active",
+        "age_of_chicks": "1 day old"
+    },
+    {
+        "date": "2025-05-01",
+        "chickens_bought": 250,
+        "farm_id": 3,
+        "farm_name": "Farm C",
+        "price": 250000,
+        "amount_per_chick": 1000,
+        "days_since_purchased": 20,
+        "batch_id": 3,
+        "batch_name":"Batch C",
+        "batch_description": "Third batch of chickens purchased for the year",
+        "batch_status": "Active",
+        "age_of_chicks": "1 day old"
+    }
+]

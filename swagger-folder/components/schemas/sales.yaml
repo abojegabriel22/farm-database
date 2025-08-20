@@ -1,0 +1,66 @@
+salesInput:
+  type: object
+  required: ["numberSold", "totalPrice", "batchId", "purchaseId"]
+  properties:
+    numberSold:
+      type: integer
+      description: The number of chickens sold
+      example: 1
+    totalPrice:
+      type: number
+      description: Total price from the sales
+      example: 12000
+    batchId:
+      type: string
+      description: The ID of the batch associated with this sale
+      example: "689fb79565c1f388a6192dcc"
+    purchaseId:
+      type: string
+      description: The purchase record linked to this sale
+      example: "689fb8d465c1f388a6192dd3"
+
+salesOutput:
+  type: object
+  properties:
+    _id:
+      type: string
+      description: Unique ID of the sale
+      example: "68a3dd7668848862d91bedf3"
+    batchId:
+      type: object
+      description: Batch details (populated in GET response)
+      properties:
+        _id:
+          type: string
+          example: "689fb79565c1f388a6192dcc"
+        name:
+          type: string
+          example: "Batch A"
+        startDate:
+          type: string
+          format: date-time
+          example: "2025-08-14T23:00:00.000Z"
+    purchaseId:
+      type: string
+      description: Purchase ID linked to this sale
+      example: "689fb8d465c1f388a6192dd3"
+    numberSold:
+      type: integer
+      description: Number of chickens sold
+      example: 2
+    totalPrice:
+      type: number
+      description: Total price from the sales
+      example: 20000
+    pricePerSale:
+      type: number
+      description: Price per chicken sold
+      example: 10000
+    date:
+      type: string
+      description: Date the sale was recorded
+      example: "16/08/2025, 01:02:35"
+    age:
+      type: integer
+      description: The age of the chickens at the time of sale (in days)
+      example: 3

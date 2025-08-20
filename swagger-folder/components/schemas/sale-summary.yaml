@@ -1,0 +1,28 @@
+saleSummaryOutput:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "sale summary fetched successfully"
+    data:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "68a108f4f2ab8991d82c02ce"
+        batchId:
+          type: string
+          example: "689fb79565c1f388a6192dcc"
+        __v:
+          type: integer
+          example: 0
+        lastUpdated:
+          type: string
+          format: date-time
+          example: "2025-08-19T03:24:18.937Z"
+        totalNumSold:
+          type: integer
+          example: 25
+        totalSaleAmount:
+          type: number
+          example: 234000

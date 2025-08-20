@@ -1,0 +1,25 @@
+mortalitySumOutput:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "mortality records fetched successfully"
+    data:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "68a1fd17f2ab8991d82c02d1"
+        batchId:
+          type: string
+          example: "689fb79565c1f388a6192dcc"
+        __v:
+          type: integer
+          example: 0
+        lastUpdated:
+          type: string
+          format: date-time
+          example: "2025-08-19T03:09:14.575Z"
+        totalMortalities:
+          type: integer
+          example: 29

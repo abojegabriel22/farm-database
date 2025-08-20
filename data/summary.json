@@ -1,0 +1,22 @@
+
+[
+    {
+        "total_sales": 100000,
+        "total_feeds": 50000,
+        "total_chickens_bought": 200,
+        "capital_invested": 300000,
+        "revenue": 150000,
+        "net_profit": 50000,
+        "number_of_mortality": 16,
+        "average_price_per_sale": 25000,
+        "average_price_per_feed": 25000,
+        "average_price_per_chicken": 1000,
+        "start_date": "2025-01-01",
+        "end_date": "2025-12-31",
+        "total_days": 365,
+        "farm_id": "1",
+        "farm_name": "Farm A",
+        "address": "Dutse-alhaji, zone-6, Abuja",
+        "contact_number": "+2348022911266"
+    }
+]

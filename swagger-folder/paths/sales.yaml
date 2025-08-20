@@ -1,0 +1,59 @@
+post:
+  summary: This is a post route for sales record
+  description: Create a new sales record
+  tags:
+    - Sales
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/sales.yaml#/salesInput'
+  responses:
+    '201':
+      description: New sale record created successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "New sale record"
+              data:
+                $ref: '../components/schemas/sales.yaml#/salesOutput'
+    '400':
+      description: Unable to save record, please try again!
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml#/errorResponse'
+
+get:
+  summary: This is the get route for sale record
+  description: Get all sales records for a batch
+  tags:
+    - Sales
+  parameters:
+    - name: batchId
+      in: path
+      required: true
+      description: The ID of the batch whose sales records are being requested
+      schema:
+        type: string
+        example: "689fb79565c1f388a6192dcc"
+  responses:
+    '200':
+      description: Sales fetched successfully
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../components/schemas/sales.yaml#/salesOutput'
+    '404':
+      description: No sales record found for this batch
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml#/errorResponse'

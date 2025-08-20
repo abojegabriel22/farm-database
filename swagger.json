@@ -1,0 +1,367 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Farm Database API",
+    "version": "1.0.0",
+    "description": "API for managing farm records and calculations"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1960",
+      "description": "localhost server for development"
+    }
+  ],
+  "paths": {
+    "/chicken-api/purchase": {
+      "post": {
+        "summary": "Create purchase",
+        "description": "Adds a new purchase record and calculates pricePerChick automatically",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/purchaseInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Purchase created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/purchaseOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+
+        }
+
+      },
+      "get": {
+        "summary": "Get all purchases",
+        "description": "Retrieves all purchase records",
+        "responses": {
+          "200": {
+            "description": "List of purchases retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/purchaseOutput"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chicken-api/feeds": {
+      "post": {
+        "summary": "Create feed record",
+        "description": "Adds a new feed record and calculates pricePerFeed automatically",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/feedsInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Adds a new feed record successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/feedsOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid feeds input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all feeds records",
+        "description": "Retrieves all feed records",
+        "responses": {
+          "200": {
+            "description": "List of feeds records retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/feedsOutput"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chicken-api/vaccine": {
+      "post": {
+        "summary": "vaccine input section",
+        "description": "Adds a new vaccine record",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/vaccineInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "adds a new vaccine successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/vaccineOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input vaccine data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Gets all vaccine record",
+        "description": "Retrieves all vaccine record",
+        "responses": {
+          "200": {
+            "description": "List of vaccine records retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/vaccineOutput"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "purchaseInput": {
+        "type": "object",
+        "required": ["quantity", "price", "batchNumber"],
+        "properties": {
+          "quantity": {
+            "type": "integer",
+            "description": "Number of chicks bought",
+            "example": 300
+          },
+          "price": {
+            "type": "number",
+            "description": "Price of chicks in NGN",
+            "example": 150000.00
+          },
+          "batchNumber": {
+            "type": "integer",
+            "example": 1,
+            "description": "Batch number for the purchase"
+          }
+        }
+      },
+      "purchaseOutput": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique identifier for the purchase",
+            "example": "60c72b2f9b1e8d3f4c8b4567"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Number of chicks bought",
+            "example": 300
+          },
+          "price": {
+            "type": "number",
+            "description": "Total price of chicks in NGN",
+            "example": 150000.00
+          },
+          "pricePerChick": {
+            "type": "number",
+            "description": "Price per chick in NGN automatically calculated",
+            "example": 500.00
+          },
+          "batchNumber": {
+            "type": "integer",
+            "description": "This is the batch number for the purchase",
+            "example": 1
+          },
+          "dateOfPurchase": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the purchase happened",
+            "example": "10/08/2025, 22:38:10"
+          },
+          "daysSincePurchase": {
+            "type": "integer",
+            "description": "Number of days since the purchase was made",
+            "example": 5
+          }
+        }
+      },
+      "feedsInput": {
+        "type": "object",
+        "required": ["quantity", "totalPrice"],
+        "properties": {
+          "quantity": {
+            "type": "integer",
+            "description": "Quantity of feeds bought",
+            "example": 10
+          },
+          "totalPrice": {
+            "type": "number",
+            "description": "Total price of feeds",
+            "example": 248500
+          }
+        }
+      },
+      "feedsOutput": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique identifier for each feed records",
+            "example": "689a70f6fe5975045b7377ca"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Number of feeds purchased",
+            "example": 10
+          },
+          "totalPrice": {
+            "type": "number",
+            "description": "Amount of feeds bought in total",
+            "example": 248500
+          },
+          "pricePerFeed": {
+            "type": "number",
+            "description": "Amount auto calculated from total feeds and totalPrice",
+            "example": 24850
+          },
+          "date": {
+            "type": "string",
+            "description": "Date when feeds were bought",
+            "example": "11/08/2025, 23:38:46"
+          }
+        }
+      },
+      "vaccineInput": {
+        "type": "object",
+        "required": ["vaccineName", "vaccinePrice", "quantity"],
+        "properties": {
+          "quantity": {
+            "type": "integer",
+            "description": "Quantity of vaccines bought",
+            "example": 3
+          },
+          "vaccineName": {
+            "type": "string",
+            "description": "Name of the vaccine bought",
+            "example": "Lasota"
+          },
+          "vaccinePrice": {
+            "type": "number",
+            "description": "Price of the vaccine",
+            "example": 3000
+          }
+        }
+      },
+      "vaccineOutput": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "auto generated id from database",
+            "example": "60c72b2f9b1e8d3f4c8b4567"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Quantity of vaccines bought",
+            "example": 3
+          },
+          "vaccineName": {
+            "type": "string",
+            "description": "Name of the vaccine bought",
+            "example": "Lasota"
+          },
+          "vaccinePrice": {
+            "type": "number",
+            "description": "Price of the vaccine",
+            "example": 3000
+          },
+          "totalAmount": {
+            "type": "number",
+            "description": "Price of the vaccine in total auto calculated",
+            "example": 9000
+          },
+          "date": {
+            "type": "string",
+            "description": "Date when record was taken",
+            "example": "12/08/2025, 09:19:20"
+          }
+        }
+      },
+      "errorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message describing what went wrong",
+            "example": "Invalid input data"
+          }
+        }
+      }
+    }
+  }
+}

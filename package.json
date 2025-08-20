@@ -1,0 +1,35 @@
+{
+  "name": "farm-database",
+  "version": "1.0.0",
+  "description": "creating backend for my farm database to handle calculations and take records",
+  "keywords": [
+    "nodejs",
+    "angular",
+    "mongodb"
+  ],
+  "license": "ISC",
+  "author": "Aboje Gabriel",
+  "main": "index.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "nodemon main.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/register": "^7.27.1",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "chalk": "^5.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.17.0",
+    "node-emoji": "^2.2.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-parser": "^10.0.3",
+    "swagger-ui-express": "^5.0.1"
+  }
+}

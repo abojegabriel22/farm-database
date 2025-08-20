@@ -1,0 +1,57 @@
+
+purchaseInput:
+  type: object
+  required:
+    - quantity
+    - price
+    - batchId
+  properties:
+    quantity:
+      type: integer
+      example: 520
+    price:
+      type: number
+      example: 500000
+    batchId:
+      type: string
+      description: The ID of the batch linked to this purchase
+      example: "68a3b06d617178ea6af73d4e"
+
+purchaseOutput:
+  type: object
+  properties:
+    batchId:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "68a3b06d617178ea6af73d4e"
+        name:
+          type: string
+          example: "Batch G"
+        startDate:
+          type: string
+          format: date-time
+          example: "2025-08-18T23:59:57.166Z"
+    quantity:
+      type: integer
+      example: 520
+    price:
+      type: number
+      example: 500000
+    pricePerChick:
+      type: number
+      example: 961.5384615384615
+    _id:
+      type: string
+      example: "68a3b876a9f9531abca7561c"
+    dateOfPurchase:
+      type: string
+      format: date-time
+      example: "2025-08-18T23:34:14.908Z"
+    daysSincePurchase:
+      type: integer
+      example: 0
+    dateOfPurchaseFormatted:
+      type: string
+      example: "19/08/2025, 00:34:14"
