@@ -21,6 +21,8 @@ import mortalitySummaryRoute from "./routes/mortSummary.route.js"
 import feedSumRoute from "./routes/feedsTotal.route.js";
 import allRecordsRoute from "./routes/allRecords.route.js";
 import totalVaccineRoute from "./routes/totalVaccineRoute.js";
+import registerRoute from "./routes/register.route.js"
+import loginRoute from "./routes/login.route.js";
 
 dotenv.config();
 const app = express();
@@ -44,6 +46,8 @@ app.use("/chicken-api/mortality-sum", mortalitySummaryRoute)
 app.use("/chicken-api/feeds-total", feedSumRoute)
 app.use("/chicken-api/all-records", allRecordsRoute);
 app.use("/chicken-api/total-vaccine", totalVaccineRoute);
+app.use("/chicken-api/register", registerRoute)
+app.use("/chicken-api/login", loginRoute)
 
 // Example route
 app.get("/", (req, res) => {

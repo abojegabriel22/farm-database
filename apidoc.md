@@ -1,13 +1,17 @@
 
+* [dev-server]
+# https://farm-database.onrender.com/
+* [local-server]
+# http://localhost:1960/
 <!-- /////////////////post ////////////////// -->
 
 (post)
-http://localhost:1960/chicken-api/batch
+# http://localhost:1960/chicken-api/batch
 * {
     "name": "Batch F",
     "description": "This is my sixeth poultry batch"
 }
-(response)
+# (response)
 * {
     "message": "New batch created",
     "data": {
@@ -22,14 +26,14 @@ http://localhost:1960/chicken-api/batch
 
 
 (post)
-http://localhost:1960/chicken-api/purchase
+# http://localhost:1960/chicken-api/purchase
 * {
     "quantity": 520,
     "price": 500000,
     "batchId": "689fb7ff65c1f388a6192dcf",
     "purchaseId": "689fb8d465c1f388a6192dd3"
 }
-(response)
+# (response)
 * {
     "message": "Purchase record created successfully",
     "data": {
@@ -47,14 +51,14 @@ http://localhost:1960/chicken-api/purchase
 
 
 (post)
-http://localhost:1960/chicken-api/feeds
+# http://localhost:1960/chicken-api/feeds
 * {
     "quantity": 10,
     "totalPrice": 110000,
     "batchId": "689fb79565c1f388a6192dcc",
     "purchaseId": "689fb8d465c1f388a6192dd3"
 } 
-(response)
+# (response)
 * {
     "message": "Feed record created successfully",
     "data": {
@@ -69,7 +73,7 @@ http://localhost:1960/chicken-api/feeds
 }
 
 (post)
-http://localhost:1960/chicken-api/vaccine
+# http://localhost:1960/chicken-api/vaccine
 * {
     "vaccineName": "gomboro",
     "vaccinePrice": 3000,
@@ -77,7 +81,7 @@ http://localhost:1960/chicken-api/vaccine
     "batchId": "689fb79565c1f388a6192dcc"
     "purchaseId": "689fb8d465c1f388a6192dd3"
 }
-(response)
+# (response)
 * {
     "message": "New vaccine record taken successfully",
     "data": {
@@ -93,14 +97,14 @@ http://localhost:1960/chicken-api/vaccine
 
 
 (post)
-http://localhost:1960/chicken-api/sales
+# http://localhost:1960/chicken-api/sales
 * {
     "numberSold": 1,
     "totalPrice": 12000,
     "batchId": "689fb79565c1f388a6192dcc",
     "purchaseId": "689fb8d465c1f388a6192dd3"
 }
-(response)
+# (response)
 * {
     "message": "New sale record",
     "data": {
@@ -116,13 +120,13 @@ http://localhost:1960/chicken-api/sales
 }
 
 (post)
-http://localhost:1960/chicken-api/mortality
+# http://localhost:1960/chicken-api/mortality
 * {
     "mortalityRate": 2,
     "batchId": "689fb79565c1f388a6192dcc",
     "purchaseId": "68a12f0394723e99cf8dc3e7"
 }
-(response)
+# (response)
 * {
     "message": "New record of mortality taken:",
     "data": {
@@ -141,55 +145,55 @@ http://localhost:1960/chicken-api/mortality
 
 <!-- ///////////////get /////////////// -->
 (get)
-http://localhost:1960/chicken-api/all-records/689fb79565c1f388a6192dcc
+# http://localhost:1960/chicken-api/all-records/689fb79565c1f388a6192dcc
 * all sum records belonging to a purchase
 
 (get)
-http://localhost:1960/chicken-api/feeds-total/689fb79565c1f388a6192dcc
+# http://localhost:1960/chicken-api/feeds-total/689fb79565c1f388a6192dcc
 * total feeds and their prices for a given batch or sale
 
 (get)
-http://localhost:1960/chicken-api/sales/689fb79565c1f388a6192dcc
+# http://localhost:1960/chicken-api/sales/689fb79565c1f388a6192dcc
 * total sales for a given purchase and batch
 
 (get)
-http://localhost:1960/chicken-api/mortality/689fb79565c1f388a6192dcc
+# http://localhost:1960/chicken-api/mortality/689fb79565c1f388a6192dcc
 * total mortalities for a given purchase and batch
 
 (get)
-http://localhost:1960/chicken-api/purchase/689fb79565c1f388a6192dcc
+# http://localhost:1960/chicken-api/purchase/689fb79565c1f388a6192dcc
 * total purchase for a given batch
 
 (get)
-http://localhost:1960/chicken-api/vaccine/689fb79565c1f388a6192dcc
+# http://localhost:1960/chicken-api/vaccine/689fb79565c1f388a6192dcc
 * total vaccines for a given batch / purchase
 
 (GET)
-http://localhost:1960/chicken-api/batch
+# http://localhost:1960/chicken-api/batch
 * list of all batches by a user
 
 (get)
-http://localhost:1960/chicken-api/batch/689fb79565c1f388a6192dcc
+# http://localhost:1960/chicken-api/batch/689fb79565c1f388a6192dcc
 * get purchase by its id
 
 (get)
-http://localhost:1960/chicken-api/batchdata/689fb79565c1f388a6192dcc
+# http://localhost:1960/chicken-api/batchdata/689fb79565c1f388a6192dcc
 * calculations from all the lists in batch. starting from list of all purchases, vaccines, mortalities etc
 
 (get)
-http://localhost:1960/chicken-api/sale-summary/689fb79565c1f388a6192dcc
+# http://localhost:1960/chicken-api/sale-summary/689fb79565c1f388a6192dcc
 * list of all the sales. calculation
 
 (get)
-http://localhost:1960/chicken-api/mortality-sum/689fb79565c1f388a6192dcc
+# http://localhost:1960/chicken-api/mortality-sum/689fb79565c1f388a6192dcc
 * list of all mortality records in the database. calculation
 
 (get)
-http://localhost:1960/chicken-api/feeds-total/689fb79565c1f388a6192dcc
+# http://localhost:1960/chicken-api/feeds-total/689fb79565c1f388a6192dcc
 * list of all feeds bought for a given batch
 
 (get)
-http://localhost:1960/chicken-api/all-records/689fb79565c1f388a6192dcc
+# http://localhost:1960/chicken-api/all-records/689fb79565c1f388a6192dcc
 * same as batchdata
 
 

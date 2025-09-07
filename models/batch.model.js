@@ -1,6 +1,12 @@
 
 import mongoose from "mongoose";
 const batchSchema = new mongoose.Schema({
+    //add ref to farm
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "register",
+        required: true
+    },
     name: {
         type: String,
         required: true,
