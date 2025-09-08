@@ -22,7 +22,7 @@ const registerSchema = new mongoose.Schema({
         required: true,
         validate: {
             validator: function(v){
-                // password must be at least 6 characters long and contain at least one number and one letter
+                // password must be at least 8 characters long and contain at least one number and one letter
                 return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(v)
             },
             message: "Password must be at least 8 characters long and contain at least one number and one letter"
@@ -32,6 +32,14 @@ const registerSchema = new mongoose.Schema({
         type: String,
         enum: ['user', 'admin'],
         default: 'user'
+    },
+    auth: {
+        type: Boolean,
+        default: false
+    },
+    loginAt: {
+        type: Date,
+        default: () => new Date(Date.now() + 60 * 60 * 1000)
     }
 }, { timestamps: true })
 

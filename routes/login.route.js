@@ -1,13 +1,13 @@
 import express from "express"
 import chalk from "chalk"
 import jwt from "jsonwebtoken"
-import loginModel from "../models/login.model"
+// import loginModel from "../models/login.model"
 import registerModel from "../models/register.model"
 
 const router = express.Router()
 
 // JWT secret key (use .env in production!)
-const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey"
+const JWT_SECRET = process.env.JWT_SECRET
 
 // user login
 router.post("/", async (req, res) => {
@@ -38,17 +38,18 @@ router.post("/", async (req, res) => {
         )
 
         // ✅ store login history (optional)
-        const newLogin = new loginModel({
-            userId: userExist._id,
-            username: userExist.username,
-        })
-        await newLogin.save()
+        // const newLogin = new loginModel({
+        //     userId: userExist._id,
+        //     username: userExist.username,
+        // })
+        // await newLogin.save()
 
-        const lastLogin = await loginModel
-            .findOne({ userId: userExist._id })
-            .sort({ loginAt: -1 }) // sort descending
-            .skip(1) // skip the most recent (current) login
-            .select("loginAt")
+        // const lastLogin = await registerModel
+        //     .findOne({ userId: userExist._id })
+        //     .sort({ loginAt: -1 }) // sort descending
+        //     .skip(1) // skip the most recent (current) login
+        //     .select("loginAt")
+        const lastLogin = userExist.loginAt
 
         // ✅ success response
         res.status(200).json({
@@ -62,12 +63,38 @@ router.post("/", async (req, res) => {
                 role: userExist.role,
                 createdAt: userExist.createdAt,
                 updatedAt: userExist.updatedAt,
-                lastLogin: lastLogin ? lastLogin.loginAt : null
+                lastLogin: lastLogin || null,
+                auth: true
             }
         })
+        await registerModel.updateOne(
+            { _id: userExist._id },
+            { $set: { auth: true, loginAt: new Date(Date.now() + 60 * 60 * 1000) } }
+        )
+        console.log(chalk.green("User logged in:", username))
 
     } catch (error) {
         console.error(chalk.red("Login error:"), error.message)
+        res.status(500).json({ message: "Server error" })
+    }
+})
+
+/////////// logout route/////////
+router.post("/logout", async (req, res) => {
+    try {
+        const token = req.headers.authorization?.split(" ")[1]
+        if(!token){
+            return res.status(401).json({ message: "No token provided" })
+        }
+        const decoded = jwt.verify(token, JWT_SECRET)
+        await registerModel.updateOne(
+            { _id: decoded.id },
+            { $set: { auth: false } }
+        )
+        res.status(200).json({ message: "Logout successful" })
+        console.log(chalk.yellow("User logged out:", decoded.id))
+    } catch(err){
+        console.error(chalk.red("Logout error:"), err.message)
         res.status(500).json({ message: "Server error" })
     }
 })

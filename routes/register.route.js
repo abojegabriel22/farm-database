@@ -21,7 +21,8 @@ router.post("/", async (req, res) => {
             email,
             username,
             password,
-            role: role || 'user'
+            role: role || 'user',
+            auth: false
         })
         const saveNewUser = await newUser.save()
         console.log(chalk.hex("#34ff25")("New user registered"))
