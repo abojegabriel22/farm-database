@@ -94,7 +94,7 @@ router.get("/me", async (req, res) => {
         res.status(200).json({ user })
     } catch(err){
         console.error(chalk.red("Fetch user error:"), err.message)
-        res.status(500).json({ message: "Server error" })
+        res.status(500).json({ message: "Server error", error: err.message })
     }
 })
 
