@@ -48,7 +48,8 @@ app.use("/chicken-api/all-records", allRecordsRoute);
 app.use("/chicken-api/total-vaccine", totalVaccineRoute);
 app.use("/chicken-api/register", registerRoute)
 app.use("/chicken-api/login", loginRoute)
-app.use("/chicken-api/logout", loginRoute)
+app.use("/chicken-api/info", loginRoute)
+app.use("/chicken-api/auth", loginRoute)
 
 // Example route
 app.get("/", (req, res) => {

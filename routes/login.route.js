@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
         // ✅ check password
         const isMatch = await userExist.comparePassword(password) // you named it comparePassword earlier
         if (!isMatch) {
-            return res.status(401).json({ message: "Invalid credentials" })
+            return res.status(401).json({ message: "Wrong password!" })
         }
 
         // ✅ generate JWT
@@ -75,6 +75,25 @@ router.post("/", async (req, res) => {
 
     } catch (error) {
         console.error(chalk.red("Login error:"), error.message)
+        res.status(500).json({ message: "Server error" })
+    }
+})
+
+//////// user info route /////////
+router.get("/me", async (req, res) => {
+    try {
+        const token = req.headers.authorization?.split(" ")[1]
+        if(!token){
+            return res.status(401).json({ message: "No token provided"})
+        }
+        const decoded = jwt.verify(token, JWT_SECRET)
+        const user = await registerModel.findById(decoded.id).select("-password")
+        if(!user){
+            return res.status(404).json({ message: "User not found"})
+        }
+        res.status(200).json({ user })
+    } catch(err){
+        console.error(chalk.red("Fetch user error:"), err.message)
         res.status(500).json({ message: "Server error" })
     }
 })
