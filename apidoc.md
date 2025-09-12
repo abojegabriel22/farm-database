@@ -9,18 +9,21 @@
 # http://localhost:1960/chicken-api/batch
 * {
     "name": "Batch F",
-    "description": "This is my sixeth poultry batch"
+    "description": "This is my sixeth poultry batch",
+    "userId":"68c0d822bfe70787a167ee31"
 }
+
 # (response)
 * {
     "message": "New batch created",
     "data": {
-        "name": "Batch F",
-        "description": "This is my sixeth poultry batch",
+        "userId": "68c0d822bfe70787a167ee31",
+        "name": "jesus-0",
+        "description": "First batch",
         "status": "Active",
-        "_id": "68a3466a34f621808c393f65",
-        "startDate": "2025-08-18T16:27:38.582Z",
-        "createAt": "2025-08-18T16:27:38.590Z"
+        "_id": "68c3413fecac78734d6e84d6",
+        "startDate": "2025-09-11T22:38:07.213Z",
+        "createAt": "2025-09-11T22:38:07.213Z"
     }
 }
 
