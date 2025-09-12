@@ -39,6 +39,22 @@ router.get("/:id", async (req, res) => {
     }
 })
 
+// get all batches allocated to a particular user
+router.get("/admin/:userId", async (req, res) => {
+    try{
+        const {userId} = req.params
+        // find all batches belonging to this user
+        const userBatches = await batchModel.find({userId})
+        if(!userBatches || userBatches.length === 0){
+            return res.status(404).json({message: "No batch found for this user"})
+        }
+        res.json(userBatches)
+    } catch(err){
+        console.error("Error fetching user batches:", err)
+        res.status(500).json({ message: "Server error", error: err.message })
+    }
+})
+
 // Update batch
 router.put("/:id", async (req, res) => {
     try {
