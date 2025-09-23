@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
 router.get("/:batchId", async (req, res) => {
     // res.send("route works")
     try{
-        const sales = await salesModel.find({batchId: req.params.batchId}).populate("batchId", "name startDate")
+        const sales = await salesModel.find({batchId: req.params.batchId}).populate("batchId", "name startDate").populate("purchaseId", "dateOfPurchase name" )
         // const sales = await salesModel.find()
         if(sales.length === 0){
             return res.status(404).json({

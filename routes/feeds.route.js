@@ -7,7 +7,7 @@ const router = express.Router()
 
 // Create a new feed record
 router.post("/", async (req, res) => {
-    const {quantity, totalPrice, batchId, purchaseId} = req.body
+    const {name, quantity, totalPrice, batchId, purchaseId} = req.body
     try{
         // check for batchId
         if(!batchId || !purchaseId){
@@ -20,6 +20,7 @@ router.post("/", async (req, res) => {
         }
 
         const newFeed = new feedsModel({
+            name,
             quantity,
             totalPrice,
             batchId,
@@ -38,14 +39,14 @@ router.post("/", async (req, res) => {
 // get all feed records
 router.get("/:batchId", async (req, res) => {
     try {
-        const feedsData = await feedsModel.find({batchId: req.params.batchId}).populate("batchId", "name, startDate").populate("purchaseId", "purchaseDate" )
-        // const feedsData = await feedsModel.find()
+        const feedsData = await feedsModel.find({batchId: req.params.batchId}).populate("batchId", "startDate name").populate("purchaseId", "dateOfPurchase name" )
         if(feedsData.length === 0){
             return res.status(404).json({
                 message: "No records found",
                 data: []
             })
         }
+        console.log(feedsData)
         return res.status(200).json({
             message: "Feeds fetched successfully",
             data: feedsData

@@ -12,6 +12,10 @@ const feedSchema = new mongoose.Schema({
         ref: "purchase",
         required: true
     },
+    name: {
+        type: String,
+        required: true
+    },
     quantity: {
         type: Number,
         required: true

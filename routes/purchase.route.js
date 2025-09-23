@@ -9,7 +9,7 @@ const router = express.Router()
 
 // Create a new purchase record
 router.post("/", async (req, res) => {
-    const { quantity, price, batchId } = req.body
+    const { name, quantity, price, batchId } = req.body
     try {
         // validate batchId
         if(!batchId){
@@ -22,6 +22,7 @@ router.post("/", async (req, res) => {
         }
         // create new purchase record with batchId
         const newPurchase = new purchaseModel({
+            name,
             quantity,
             price,
             batchId

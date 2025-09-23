@@ -9,6 +9,10 @@ const purchaseSchema = new mongoose.Schema({
     ref: "batch",
     required: true
   },
+    name: {
+        type: String,
+        required: true,
+    },
     quantity: {
         type: Number,
         required: true,
@@ -21,11 +25,6 @@ const purchaseSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    // batchNumber: {
-    //     type: Number,
-    //     required: true,
-    //     unique: true
-    // },
     dateOfPurchase: {
         type: Date,
         default: Date.now,
