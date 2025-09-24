@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
 // get all mortality records 
 router.get("/:batchId", async (req, res) => {
     try {
-        const mortalityRecords = await mortalityModel.find({batchId: req.params.batchId}).populate("batchId", "name startDate").populate("purchaseId", "dateOfPurchase")
+        const mortalityRecords = await mortalityModel.find({batchId: req.params.batchId}).populate("batchId", "name startDate").populate("purchaseId", "dateOfPurchase name")
 
         if(mortalityRecords.length === 0){
             return res.status(404).json({
