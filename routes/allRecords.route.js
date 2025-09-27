@@ -7,6 +7,7 @@ import feedSumModel from "../models/feedSummary.model.js";
 import mortModel from "../models/mortSummary.model.js";
 import totalVaccineModel from "../models/totalVaccine.model.js";
 import purchaseModel from "../models/purchase.model.js";
+import batchModel from "../models/batch.model.js";
 
 const router = express.Router();
 
@@ -57,9 +58,26 @@ router.get("/:batchId", async (req, res) => {
     const totalExpenses = capital + totalFeeds + totalVaccineCost;
 
     const netProfit = revenue - (capital + totalFeeds + totalVaccineCost);
+
+    const remainingChicks = purchasedChicks - (totalNumSold + totalMortality);
+    let updatedBatch = null;
+    if (remainingChicks === 0) {
+      updatedBatch = await batchModel.findByIdAndUpdate(
+        batchId,
+        {
+          status: "Completed",
+          endDate: new Date(),
+        },
+        { new: true } // return the updated document
+      );
+    } else {
+      // fetch batch to include in response if not updated
+      updatedBatch = await batchModel.findById(batchId);
+    }
+
     // build computed summary
     const computedSummary = {
-      batchId,
+      batchId: updatedBatch,
       purchaseId: purchaseSummary._id,
       startDate: purchaseSummary.dateOfPurchase,
       capital,
@@ -71,7 +89,7 @@ router.get("/:batchId", async (req, res) => {
       netProfit,
       totalNumSold,
       purchasedChicks,
-      remainingChicks: purchasedChicks - (totalNumSold + totalMortality)
+      remainingChicks
     };
 
     // respond with combined data
