@@ -38,6 +38,10 @@ const batchSchema = new mongoose.Schema({
             date.setHours(date.getHours() + 1); // add +1 hour
             return date;
         }
+    },
+    endDate: { // ✅ new field
+        type: Date,
+        default: null
     }
 }, {
     toJSON: {

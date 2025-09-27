@@ -77,4 +77,29 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
+// Terminate batch
+router.put("/:id/terminate", async (req, res) => {
+    try {
+        const batch = await batchModel.findById(req.params.id);
+        if (!batch) {
+            return res.status(404).json({ error: "Batch not found" });
+        }
+
+        // Only terminate active batches
+        if (batch.status !== "Active") {
+            return res.status(400).json({ message: "Only active batches can be terminated" });
+        }
+
+        batch.status = "Completed";  // or "Completed"
+        batch.endDate = new Date(); // record termination date
+        await batch.save();
+
+        res.json({ message: "Batch terminated successfully", data: batch });
+    } catch (err) {
+        console.error("Error terminating batch:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
 export default router

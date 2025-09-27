@@ -1,8 +1,11 @@
 
+import mongoose from "mongoose";
 import express from "express"
 import salesModel from "../models/sales.model"
 import chalk from "chalk"
 import batchModel from "../models/batch.model"
+import mortalityModel from "../models/mortality.model"
+import purchaseModel from "../models/purchase.model";
 
 const router = express.Router()
 
@@ -10,13 +13,50 @@ const router = express.Router()
 router.post("/", async (req, res) => {
     const { numberSold, totalPrice, batchId, purchaseId } = req.body
     try{
-        if(!batchId){
-            return res.status(400).json({message: "BatchId is required"})
+        if(!batchId || !purchaseId){
+            return res.status(400).json({message: "BatchId and purchaseId are required"})
         }
         const batchExist = await batchModel.findById(batchId)
         if(!batchExist){
             return res.status(404).json({message: "Batch does not exist"})
         }
+        // check purchase
+        const purchaseExist = await purchaseModel.findById(purchaseId);
+        if (!purchaseExist) {
+        return res.status(404).json({ message: "Purchase record not found" });
+        }
+
+        const purchasedChicks = purchaseExist.quantity || 0;
+
+        // get total sales + mortalities so far
+        const [salesSummary, mortalitySummary] = await Promise.all([
+        salesModel.aggregate([
+            { $match: { batchId: new mongoose.Types.ObjectId(batchId) } },
+            { $group: { _id: null, totalSold: { $sum: "$numberSold" } } }
+        ]),
+        mortalityModel.aggregate([
+            { $match: { batchId: new mongoose.Types.ObjectId(batchId) } },
+            { $group: { _id: null, totalMortality: { $sum: "$mortalityRate" } } }
+        ])
+        ]);
+
+        const totalSold = salesSummary[0]?.totalSold || 0;
+        const totalMortality = mortalitySummary[0]?.totalMortality || 0;
+
+        // check if new sale breaks the rule
+        if (totalSold + totalMortality + numberSold > purchasedChicks) {
+        return res.status(400).json({
+            message: "Invalid record: Sales + Mortalities exceed total purchased chicks",
+            details: {
+            purchasedChicks,
+            currentSold: totalSold,
+            currentMortality: totalMortality,
+            attemptedToSell: numberSold,
+            remainingChicks: purchasedChicks - (totalSold + totalMortality)
+            }
+        });
+        }
+
         const newSale = new salesModel({
             numberSold,
             totalPrice,

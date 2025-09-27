@@ -28,6 +28,51 @@ router.get("/:batchId", async (req, res) => {
       totalVaccineModel.findOne({ batchId}).populate("batchId", "name startDate"),
       purchaseModel.findOne({ batchId }).populate("batchId", "name startDate")
     ]);
+    if(!purchaseSummary){
+      return res.status(404).json({ message: "No purchase summary found for this batch" })
+    }
+    // ---- 🔹 CALCULATIONS ----
+    const purchasedChicks = purchaseSummary.quantity || 0;
+    const totalNumSold = salesSummary?.totalNumSold || 0;
+    const totalMortality = mortalitySummary?.totalMortalities || 0;
+    // enforce check
+    if (totalNumSold + totalMortality > purchasedChicks) {
+      return res.status(400).json({
+        message: "Invalid data: total sales + mortalities exceed number of chicks purchased",
+        details: {
+          purchasedChicks,
+          totalNumSold,
+          totalMortality,
+          difference: totalNumSold + totalMortality - purchasedChicks
+        }
+      });
+    }
+    // ---- 🔹 CALCULATIONS ----
+    const capital = purchaseSummary.price || 0;
+    const revenue = salesSummary?.totalSaleAmount || 0;
+    const totalFeeds = feedSummary?.totalPrices || 0;
+    const totalFeedsBag = feedSummary?.totalQuantity || 0;
+    const totalVaccineCost = totalVaccineSummary?.totalVaccineAmount || 0;
+
+    const totalExpenses = capital + totalFeeds + totalVaccineCost;
+
+    const netProfit = revenue - (capital + totalFeeds + totalVaccineCost);
+    // build computed summary
+    const computedSummary = {
+      batchId,
+      purchaseId: purchaseSummary._id,
+      startDate: purchaseSummary.dateOfPurchase,
+      capital,
+      revenue,
+      totalFeeds,
+      totalFeedsBag,
+      totalMortality,
+      totalExpenses,
+      netProfit,
+      totalNumSold,
+      purchasedChicks,
+      remainingChicks: purchasedChicks - (totalNumSold + totalMortality)
+    };
 
     // respond with combined data
     return res.status(200).json({
@@ -37,7 +82,8 @@ router.get("/:batchId", async (req, res) => {
         feedSummary,
         mortalitySummary,
         totalVaccineSummary,
-        purchaseSummary
+        purchaseSummary,
+        computedSummary
       }
     });
   } catch (err) {

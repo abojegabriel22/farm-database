@@ -1,9 +1,11 @@
 
+import mongoose from "mongoose";
 import express from "express"
 import mortalityModel from "../models/mortality.model"
 import chalk from "chalk"
 import batchModel from "../models/batch.model"
 import purchaseModel from "../models/purchase.model"
+import salesModel from "../models/sales.model"
 const router = express.Router()
 
 // post mortality records
@@ -23,6 +25,37 @@ router.post("/", async (req, res) => {
         const purchaseExists = await purchaseModel.findById(purchaseId)
         if(!purchaseExists){
             return res.status(404).json({message: "Purchase does not exists"})
+        }
+
+        const purchasedChicks = purchaseExists.quantity || 0;
+
+        // get total sales + mortalities so far
+        const [salesSummary, mortalitySummary] = await Promise.all([
+            salesModel.aggregate([
+                { $match: { batchId: new mongoose.Types.ObjectId(batchId) } },
+                { $group: { _id: null, totalSold: { $sum: "$numberSold" } } }
+            ]),
+            mortalityModel.aggregate([
+                { $match: { batchId: new mongoose.Types.ObjectId(batchId) } },
+                { $group: { _id: null, totalMortality: { $sum: "$mortalityRate" } } }
+            ])
+        ]);
+
+        const totalSold = salesSummary[0]?.totalSold || 0;
+        const totalMortality = mortalitySummary[0]?.totalMortality || 0;
+
+        // check if new mortality breaks the rule
+        if (totalSold + totalMortality + mortalityRate > purchasedChicks) {
+            return res.status(400).json({
+                message: "Invalid record: Sales + Mortalities exceed total purchased chicks",
+                details: {
+                purchasedChicks,
+                currentSold: totalSold,
+                currentMortality: totalMortality,
+                attemptedMortality: mortalityRate,
+                remainingChicks: purchasedChicks - (totalSold + totalMortality)
+                }
+            });
         }
 
         // calculate mortalityAge = difference in days from purchase.dateOfPurchase
