@@ -114,7 +114,7 @@ router.post("/logout", async (req, res) => {
         console.log(chalk.yellow("User logged out:", decoded.id))
     } catch(err){
         console.error(chalk.red("Logout error:"), err.message)
-        res.status(500).json({ message: "Server error" })
+        res.status(500).json({ message: "There was error while trying to log you out!", error: err.message })
     }
 })
 
