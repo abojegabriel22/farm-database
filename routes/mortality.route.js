@@ -7,9 +7,11 @@ import batchModel from "../models/batch.model"
 import purchaseModel from "../models/purchase.model"
 import salesModel from "../models/sales.model"
 const router = express.Router()
+import { sendEmail } from '../utils/email'
+import { authMiddleWare } from '../middlewares/auth.middleware'
 
 // post mortality records
-router.post("/", async (req, res) => {
+router.post("/", authMiddleWare, async (req, res) => {
     const { mortalityRate, batchId, purchaseId } = req.body
 
     try{
@@ -72,6 +74,63 @@ router.post("/", async (req, res) => {
             mortalityAge
         })
         await newMortality.save()
+
+        // send email notification (optional) only to the logged in admin
+        if (req.user && req.user.role === "admin") {
+            const responseData = {
+                "Batch Name": batchExists.name,
+                "Batch ID": newMortality.batchId,
+                "Purchase Name": purchaseExists.name,
+                "Purchase ID": newMortality.purchaseId,
+                "Purchase Date": new Date(purchaseExists.dateOfPurchase).toLocaleDateString(),
+                "Mortality Rate": newMortality.mortalityRate,
+                "Mortality Age (days)": newMortality.mortalityAge,
+                "Date Recorded": new Date(newMortality.date).toLocaleString()
+            };
+
+            const tableRows = Object.entries(responseData).map(
+                ([key, value]) => `
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${key}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${value}</td>
+                    </tr>
+                `
+            ).join("");
+
+            const summaryLine = `
+                <p style="font-size: 15px; color: #444;">
+                    ✅ <b>${newMortality.mortalityRate}</b> mortalities were recorded in 
+                    <b>Batch: ${batchExists.name}</b> 
+                    (Purchase: ${purchaseExists.name}, ${new Date(purchaseExists.dateOfPurchase).toLocaleDateString()}).
+                </p>
+            `;
+
+            await sendEmail(
+                req.user.email,
+                "🐔 Admin Mortality Record Notification",
+                `
+                    <div style="font-family: Arial, sans-serif; color: #333;">
+                        <h2 style="color: #E53935;">New Mortality Record</h2>
+                        <p>Hello <b>${req.user.username || req.user.name || "Admin"}</b>,</p>
+
+                        ${summaryLine}
+
+                        <p>Here are the full details:</p>
+
+                        <table style="border-collapse: collapse; width: 100%; margin-top: 10px;">
+                            <tr style="background: #f2f2f2;">
+                                <th style="border: 1px solid #ddd; padding: 8px;">Field</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Value</th>
+                            </tr>
+                            ${tableRows}
+                        </table>
+
+                        <p style="margin-top: 20px;">Best regards,<br/>Farm Management System</p>
+                    </div>
+                `
+            );
+        }
+
         console.log(chalk.hex("#0034ff")(`Mortality recorded successfully with age ${mortalityAge} days`))
         return res.status(201).json({ message: "New record of mortality taken:", data: newMortality })
     } catch (err){

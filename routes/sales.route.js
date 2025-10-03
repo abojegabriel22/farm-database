@@ -6,11 +6,13 @@ import chalk from "chalk"
 import batchModel from "../models/batch.model"
 import mortalityModel from "../models/mortality.model"
 import purchaseModel from "../models/purchase.model";
+import { sendEmail } from '../utils/email'
+import { authMiddleWare } from '../middlewares/auth.middleware'
 
 const router = express.Router()
 
 // take record of sales
-router.post("/", async (req, res) => {
+router.post("/", authMiddleWare, async (req, res) => {
     const { numberSold, totalPrice, batchId, purchaseId } = req.body
     try{
         if(!batchId || !purchaseId){
@@ -65,10 +67,75 @@ router.post("/", async (req, res) => {
             date: new Date()
         })
         const saveNewSale = await newSale.save()
+
+        // populate batch + purchase info for email
+        const populatedSale = await salesModel.findById(saveNewSale._id)
+            .populate("batchId", "name startDate")
+            .populate("purchaseId", "dateOfPurchase name");
+
+        // ✅ Email notification to admin
+        if (req.user && req.user.role === "admin") {
+            const responseData = {
+                "Sale ID": populatedSale._id,
+                "Batch Name": populatedSale.batchId?.name || "N/A",
+                "Batch ID": populatedSale.batchId?._id || batchId,
+                "Purchase Name": populatedSale.purchaseId?.name || "N/A",
+                "Purchase ID": populatedSale.purchaseId?._id || purchaseId,
+                "Number Sold": populatedSale.numberSold,
+                "Total Price (NGN)": populatedSale.totalPrice,
+                "Price Per Sale (NGN)": populatedSale.pricePerSale,
+                "Age (days)": populatedSale.age,
+                "Date Recorded": populatedSale.date
+            };
+
+            const safeResponseData = Object.entries(responseData).map(([key, value]) => [
+                key,
+                typeof value === "object" && value !== null ? value.toString() : value
+            ]);
+
+            const tableRows = safeResponseData.map(
+                ([key, value]) => `
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">${key}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${value}</td>
+                    </tr>
+                `
+            ).join("");
+
+            const summaryLine = `
+                <p style="font-size: 15px; color: #444;">
+                    ✅ <b>${populatedSale.numberSold}</b> chicks sold for 
+                    <b>NGN${populatedSale.totalPrice}</b> 
+                    from batch <b>${populatedSale.batchId?.name}</b>.
+                </p>
+            `;
+
+            await sendEmail(
+                req.user.email,
+                "💰 Admin Sales Record Notification",
+                `
+                    <div style="font-family: Arial, sans-serif; color: #333;">
+                        <h2 style="color: #4CAF50;">New Sale Recorded</h2>
+                        <p>Hello <b>${req.user.username || req.user.name || "Admin"}</b>,</p>
+                        ${summaryLine}
+                        <p>Here are the full details:</p>
+                        <table style="border-collapse: collapse; width: 100%; margin-top: 10px;">
+                            <tr style="background: #f2f2f2;">
+                                <th style="border: 1px solid #ddd; padding: 8px;">Field</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Value</th>
+                            </tr>
+                            ${tableRows}
+                        </table>
+                        <p style="margin-top: 20px;">Best regards,<br/>Farm Management System</p>
+                    </div>
+                `
+            );
+        }
+
         console.log(chalk.hex("#34ff25")("New sale record"))
         return res.status(201).json({
             message: "New sale record",
-            data: saveNewSale
+            data: populatedSale
         })
     } catch(err){
         console.error(chalk.hex(`Unable to save record: ${err.message}`))
