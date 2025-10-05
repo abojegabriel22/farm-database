@@ -3,7 +3,10 @@ import nodemailer from "nodemailer"
 
 // transporter setup (use your real SMTP details or Gmail App Passwords)
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // true for port 465, false for other ports
+    // service: "gmail",
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
