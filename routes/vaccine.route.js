@@ -69,8 +69,8 @@ router.post("/", authMiddleWare, async (req, res) => {
         "Purchase Name": populatedVaccine.purchaseId?.name || "N/A",
         "Vaccine Name": populatedVaccine.vaccineName,
         "Quantity": populatedVaccine.quantity,
-        "Vaccine Price": populatedVaccine.vaccinePrice,
-        "Total Amount": populatedVaccine.totalAmount,
+        "Vaccine Price (NGN)": populatedVaccine.vaccinePrice,
+        "Total Amount (NGN)": populatedVaccine.totalAmount,
         "Date Recorded": populatedVaccine.date
       }
 

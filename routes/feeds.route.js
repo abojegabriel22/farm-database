@@ -39,9 +39,9 @@ router.post("/", authMiddleWare, async (req, res) => {
             const responseData = {
                 "Feed ID": populatedFeed._id,
                 "Name": populatedFeed.name,
-                "Quantity": populatedFeed.quantity,
-                "Price Per Feed": populatedFeed.pricePerFeed,
-                "Total Price": populatedFeed.totalPrice,
+                "Quantity (Bags)": populatedFeed.quantity,
+                "Price Per Feed (NGN)": populatedFeed.pricePerFeed,
+                "Total Price (NGN)": populatedFeed.totalPrice,
                 "Batch Name": populatedFeed.batchId?.name || "N/A",
                 "Batch ID": populatedFeed.batchId?._id || populatedFeed.batchId,
                 "Purchase ID": populatedFeed.purchaseId,
@@ -59,10 +59,10 @@ router.post("/", authMiddleWare, async (req, res) => {
 
             const summaryLine = `
                 <p style="font-size: 15px; color: #444;">
-                    ✅ <b>${populatedFeed.quantity}</b> units of feed (<b>${populatedFeed.name}</b>) 
+                    ✅ <b>${populatedFeed.quantity}</b> bags of feed (<b>${populatedFeed.name}</b>) 
                     recorded for batch <b>${populatedFeed.batchId?.name}</b> 
-                    at <b>${populatedFeed.pricePerFeed}</b> per feed, 
-                    totaling <b>${populatedFeed.totalPrice}</b>.
+                    at <b>₦${populatedFeed.pricePerFeed}</b> per feed, 
+                    totaling <b>₦${populatedFeed.totalPrice}</b>.
                 </p>
             `;
 

@@ -41,8 +41,8 @@ router.post("/", authMiddleWare, async (req, res) => {
                 "Purchase ID": populatedPurchase._id,
                 "Name": populatedPurchase.name,
                 "Quantity": populatedPurchase.quantity,
-                "Price": populatedPurchase.price,
-                "Price per chick": populatedPurchase.pricePerChick,
+                "Price (NGN)": populatedPurchase.price,
+                "Price per chick (NGN)": populatedPurchase.pricePerChick,
                 "Batch Name": populatedPurchase.batchId?.name || "N/A",
                 "Batch ID": populatedPurchase.batchId?._id || batchId,
                 "Start Date": populatedPurchase.batchId?.startDate,
@@ -61,7 +61,7 @@ router.post("/", authMiddleWare, async (req, res) => {
             const summaryLine = `
                 <p style="font-size: 15px; color: #444;">
                     ✅ <b>${populatedPurchase.quantity}</b> chicks (<b>${populatedPurchase.name}</b>) 
-                    purchased at <b>${populatedPurchase.pricePerChick}</b> each 
+                    purchased at <b>₦${populatedPurchase.pricePerChick}</b> each 
                     for batch <b>${populatedPurchase.batchId?.name}</b>.
                 </p>
             `
@@ -95,7 +95,7 @@ router.post("/", authMiddleWare, async (req, res) => {
          // Send success response
         return res.status(201).json({
             message: "Purchase record created successfully",
-            data: savedPurchase
+            data: populatedPurchase
         })
     
     } catch(err){

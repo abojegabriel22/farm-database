@@ -105,7 +105,7 @@ router.post("/", authMiddleWare, async (req, res) => {
             const summaryLine = `
                 <p style="font-size: 15px; color: #444;">
                     ✅ <b>${populatedSale.numberSold}</b> chicks sold for 
-                    <b>NGN${populatedSale.totalPrice}</b> 
+                    <b>₦${populatedSale.totalPrice}</b> 
                     from batch <b>${populatedSale.batchId?.name}</b>.
                 </p>
             `;
