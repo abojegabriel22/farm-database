@@ -37,10 +37,22 @@ const registerSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    verificationCode: {
+        type: String
+    },
+    verificationCodeExpires: {
+        type: Date,
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
     loginAt: {
         type: Date,
         default: () => new Date(Date.now() + 60 * 60 * 1000)
-    }
+    },
+    lastVerificationSent: { type: Date, default: null }
+
 }, { timestamps: true })
 
 registerSchema.pre("save", function (next) {
