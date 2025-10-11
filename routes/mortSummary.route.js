@@ -25,7 +25,7 @@ router.get("/:batchId", async (req, res) => {
         return res.status(400).json({message: "No mortality record found for this given batch"})
       }
       const result = {
-        batchId,
+        batchId: new mongoose.Types.ObjectId(batchId),
         totalMortalities: summary[0].totalMortalities
       }
       // find the most recent date for this batch
@@ -42,11 +42,11 @@ router.get("/:batchId", async (req, res) => {
         resultWithTime,
         {new: true, upsert: true}
       )
-      console.log(chalk.hex("#34ff25")("Sale summary updated/fetched"));
+      console.log(chalk.hex("#34ff25")("Mortality summary updated/fetched"));
       return res.status(200).json({message: "mortality records fetched successfully", data: updatedSummary})
     } catch(err){
-    console.error(chalk.hex("#ff2435")("Error fetching sale summary:", err.message));
-    return res.status(500).json({message: "Failed to fetch sale summary", error: err.message})
+    console.error(chalk.hex("#ff2435")("Error fetching mortality summary:", err.message));
+    return res.status(500).json({message: "Failed to fetch mortality summary", error: err.message})
   }
 })
 
